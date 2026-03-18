@@ -1,0 +1,168 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+}
+
+const { title, description, canonical } = Astro.props;
+const canonicalURL = canonical || new URL(Astro.url.pathname, Astro.site).href;
+const siteTitle = "Digitaler Nachlass Verwalter";
+const fullTitle = title === siteTitle ? title : `${title} | ${siteTitle}`;
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO Meta Tags -->
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content={siteTitle} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Analytics -->
+    <script defer data-domain="digitaler-nachlass-verwalter.de" src="https://plausible.io/js/script.js"></script>
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Digitaler Nachlass Verwalter",
+        "url": "https://digitaler-nachlass-verwalter.de",
+        "description": "Ihr umfassender Ratgeber für die Verwaltung des digitalen Nachlasses. Erfahren Sie, wie Sie digitale Konten, Passwörter und Online-Daten für Ihre Erben sichern.",
+        "inLanguage": "de"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Digitaler Nachlass Verwalter",
+        "url": "https://digitaler-nachlass-verwalter.de"
+      }
+    </script>
+  </head>
+  <body class="min-h-screen flex flex-col bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b border-gray-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <div class="flex-shrink-0">
+            <a href="/" class="text-xl font-bold text-blue-600 hover:text-blue-700">
+              Digitaler Nachlass Verwalter
+            </a>
+          </div>
+          <div class="hidden md:block">
+            <div class="ml-10 flex items-baseline space-x-6">
+              <a href="/" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition">
+                Startseite
+              </a>
+              <a href="/impressum" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition">
+                Impressum
+              </a>
+              <a href="/datenschutz" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition">
+                Datenschutz
+              </a>
+            </div>
+          </div>
+          <!-- Mobile menu button -->
+          <div class="md:hidden">
+            <button type="button" class="mobile-menu-button inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
+              <span class="sr-only">Menü öffnen</span>
+              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Mobile menu -->
+      <div class="mobile-menu hidden md:hidden">
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
+          <a href="/" class="text-gray-700 hover:text-blue-600 block px-3 py-2 text-base font-medium">
+            Startseite
+          </a>
+          <a href="/impressum" class="text-gray-700 hover:text-blue-600 block px-3 py-2 text-base font-medium">
+            Impressum
+          </a>
+          <a href="/datenschutz" class="text-gray-700 hover:text-blue-600 block px-3 py-2 text-base font-medium">
+            Datenschutz
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-auto">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div>
+            <h3 class="text-lg font-semibold mb-4">Digitaler Nachlass Verwalter</h3>
+            <p class="text-gray-300 text-sm">
+              Ihr umfassender Ratgeber für die sichere Verwaltung und Planung Ihres digitalen Nachlasses.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold mb-4">Rechtliches</h3>
+            <ul class="space-y-2 text-sm">
+              <li>
+                <a href="/impressum" class="text-gray-300 hover:text-white transition">Impressum</a>
+              </li>
+              <li>
+                <a href="/datenschutz" class="text-gray-300 hover:text-white transition">Datenschutzerklärung</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold mb-4">Wichtige Themen</h3>
+            <ul class="space-y-2 text-sm text-gray-300">
+              <li>Digitale Konten verwalten</li>
+              <li>Passwörter sichern</li>
+              <li>Rechtliche Aspekte</li>
+              <li>Vorsorgevollmacht</li>
+            </ul>
+          </div>
+        </div>
+        <div class="mt-8 pt-8 border-t border-gray-700 text-center text-sm text-gray-400">
+          <p>&copy; {new Date().getFullYear()} Digitaler Nachlass Verwalter. Alle Rechte vorbehalten.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Mobile Menu Toggle Script -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const menuButton = document.querySelector('.mobile-menu-button');
+        const mobileMenu = document.querySelector('.mobile-menu');
+
+        if (menuButton && mobileMenu) {
+          menuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
